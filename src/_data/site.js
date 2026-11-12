@@ -11,12 +11,11 @@ export default {
   // automatically). Leave empty for local previews.
   url: process.env.SITE_URL || "",
 
-  // GitHub organization. `orgVisible` stays false until the org page is confirmed public;
-  // when false, the site does not link to it.
+  // GitHub organization (public page confirmed 2026-11-12). Set orgVisible to false to hide the link.
   github: {
-    org: "Scott-Models",
-    orgUrl: "https://github.com/Scott-Models",
-    orgVisible: false,
+    org: "Scotts-Models",
+    orgUrl: "https://github.com/Scotts-Models",
+    orgVisible: true,
     // Monorepo that currently holds every project.
     repoUrl: "https://github.com/MarkGScott960/Scotts-Models",
     // The repo is private today (repo decision 0007). Set to true once it is public;

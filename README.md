@@ -1,6 +1,6 @@
 # Scott's Models website
 
-The company website for Scott's Models (Mark Scott and Aaron Scott), built with [Eleventy](https://www.11ty.dev/) and hosted on GitHub Pages from the Scott-Models organization's `Website` repository.
+The company website for Scott's Models (Mark Scott and Aaron Scott), built with [Eleventy](https://www.11ty.dev/) and hosted on GitHub Pages from the Scotts-Models organization's `Website` repository.
 
 - **Pages:** Home, Projects (search, filter, sort), one page per project, About, Contact, 404.
 - **Output:** plain HTML, one CSS file, one small script for the project gallery. No framework runtime, no third-party requests, about 100 KB for the home page including fonts.
@@ -50,7 +50,7 @@ The project automatically appears in the gallery, its filters, the sitemap, and 
 
 - `src/_data/site.js`: name, description, GitHub links, and two switches:
   - `github.repoPublic`: set to `true` once the Scotts-Models repo is public; project pages then link to their source folders.
-  - `github.orgVisible`: set to `true` once the Scott-Models organization page is public; the footer then links to it.
+  - `github.orgVisible`: set to `true` whether the footer links to the Scotts-Models organization page (on by default).
 - `src/_data/people.js`: team bios, links, and email addresses. Add an email only with that person's approval.
 - `src/_data/practice.js`: the decision-log excerpt, capabilities, and the decision-record count on the home page. Re-count from the repo when updating; do not estimate.
 
