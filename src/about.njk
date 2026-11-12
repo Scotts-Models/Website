@@ -1,0 +1,59 @@
+---
+layout: layouts/base.njk
+title: About
+description: "Who is behind Scott's Models: Mark Scott and Aaron Scott, what they bring, and what they are building."
+navKey: about
+bodyClass: about
+permalink: /about.html
+---
+{%- from "partials/macros.njk" import ext %}
+<div class="wrap">
+  <header class="page-head">
+    <h1>About Scott's Models</h1>
+    <p class="lead">We are two brothers who build machine learning and modeling projects together: to learn, to make things worth showing, and, where a project earns it, to build something worth selling.</p>
+  </header>
+
+  <section class="people" aria-labelledby="who-h">
+    <h2 id="who-h" class="visually-hidden">Who we are</h2>
+    {%- for person in people %}
+    <article class="person" id="{{ person.id }}" aria-labelledby="{{ person.id }}-name">
+      <div class="person__head">
+        <span class="person__initials" aria-hidden="true">{{ person.name | first }}{{ person.name.split(" ")[1] | first }}</span>
+        <div>
+          <h3 id="{{ person.id }}-name">{{ person.name }}</h3>
+          <p class="person__role">{{ person.role }}. {{ person.focus }}</p>
+        </div>
+      </div>
+      {%- for para in person.bio %}<p>{{ para }}</p>{% endfor %}
+      <h4>Working on</h4>
+      <ul class="inline-list">
+        {%- for slug in person.projects %}{% set pr = collections.projects | findSlug(slug) %}
+        <li><a href="{{ pr.url | rel }}">{{ pr.data.title }}</a></li>
+        {%- endfor %}
+      </ul>
+      <h4>Elsewhere</h4>
+      <ul class="link-list">
+        {%- for l in person.links %}<li>{{ ext(l.url, l.label + (" (" + l.handle + ")" if l.handle else "")) }}</li>{% endfor %}
+      </ul>
+    </article>
+    {%- endfor %}
+  </section>
+
+  <section class="section-block" aria-labelledby="vision-h">
+    <h2 id="vision-h">What we're building</h2>
+    <div class="two-col">
+      <p>Our projects range from a city-builder that a reinforcement-learning agent learns to play, to forecasts of company profitability and land development, to a language-model consultant for one industry, to a computational economic planner tested against a market on the same simulated world.</p>
+      <p>What ties them together is the method. Every project names its question, the data it will use, the baseline it has to beat, and what counts as failure, before any modeling starts. Our flagship, <a href="{{ '/projects/howell.html' | rel }}">Howell</a>, shipped its first Windows build in November 2026, and its first trained agent beats our rule-based bot on games it never trained on.</p>
+    </div>
+  </section>
+
+  <section class="section-block" aria-labelledby="org-h">
+    <h2 id="org-h">How we're organized</h2>
+    <dl class="facts">
+      <div><dt>One repository, separable projects</dt><dd>Every project lives in its own folder with its own README, decisions, code, data instructions, and tests, so any one of them can be split out and handed over cleanly.</dd></div>
+      <div><dt>Decision records</dt><dd>{{ practice.decisionRecords }} numbered decisions so far, each with context, options, and consequences. Accepted decisions are superseded, never rewritten.</dd></div>
+      <div><dt>Ownership</dt><dd>All code is jointly owned by Mark Scott and Aaron Scott and is not licensed for reuse. The repository is private for now.</dd></div>
+      <div><dt>Moving to GitHub</dt><dd>Our projects are being consolidated into the Scott-Models organization on GitHub, which will also host this website.</dd></div>
+    </dl>
+  </section>
+</div>

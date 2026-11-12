@@ -1,0 +1,91 @@
+---
+layout: layouts/base.njk
+title: Projects
+description: "Every Scott's Models project: reinforcement learning, forecasting, language-model systems, economic planning, and research. Search, filter by status or topic, and sort."
+navKey: projects
+bodyClass: gallery
+permalink: /projects.html
+scripts: ["/assets/js/gallery.js"]
+---
+{%- from "partials/macros.njk" import statusBadge %}
+{%- set projects = collections.projects %}
+{%- set statuses = ["Active", "Exploring", "Idea", "Paused", "Done", "Shelved"] %}
+<div class="wrap">
+  <header class="page-head">
+    <h1>Projects</h1>
+    <p class="lead">Each project is a self-contained folder in our repository with its own question, decisions, code, and tests. Statuses are copied from each project's README.</p>
+  </header>
+
+  <form class="filters" id="filters" role="search" aria-label="Filter projects" onsubmit="return false">
+    <div class="field field--search">
+      <label for="q">Search</label>
+      <input id="q" name="q" type="search" placeholder="Title, topic, language, or tool" autocomplete="off">
+    </div>
+    <div class="field">
+      <label for="status">Status</label>
+      <select id="status" name="status">
+        <option value="">Any status</option>
+        {%- for s in statuses %}{% if projects | byStatus(s) | length %}
+        <option value="{{ s }}">{{ s }} ({{ projects | byStatus(s) | length }})</option>
+        {%- endif %}{% endfor %}
+      </select>
+    </div>
+    <div class="field">
+      <label for="topic">Topic</label>
+      <select id="topic" name="topic">
+        <option value="">Any topic</option>
+        {%- for t in projects | uniqueFlat("tags") %}<option value="{{ t }}">{{ t }}</option>{% endfor %}
+      </select>
+    </div>
+    <div class="field">
+      <label for="sort">Sort by</label>
+      <select id="sort" name="sort">
+        <option value="status">Status</option>
+        <option value="updated">Recently updated</option>
+        <option value="started">Newest first</option>
+        <option value="title">Name (A to Z)</option>
+      </select>
+    </div>
+    <button class="button button--small" type="reset" id="reset">Clear filters</button>
+  </form>
+
+  <p class="results-count" id="count" aria-live="polite">Showing all {{ projects.length }} projects.</p>
+
+  <table class="ledger-table" id="project-table">
+    <caption class="visually-hidden">All projects with status, topics, languages, and dates</caption>
+    <thead>
+      <tr>
+        <th scope="col">Project</th>
+        <th scope="col">Status</th>
+        <th scope="col">Topics</th>
+        <th scope="col">Languages</th>
+        <th scope="col">Started</th>
+        <th scope="col">Updated</th>
+      </tr>
+    </thead>
+    <tbody>
+      {%- for p in projects %}
+      <tr data-title="{{ p.data.title }}" data-status="{{ p.data.status }}" data-status-rank="{{ p.data.status | statusRank }}"
+          data-topics="{{ p.data.tags | join('|') }}" data-started="{{ p.data.started }}" data-updated="{{ p.data.updated }}"
+          data-search="{{ [p.data.title, p.data.summary, p.data.question, p.data.tags | join(' '), p.data.languages | join(' '), p.data.tools | join(' '), p.data.status] | join(' ') | lower }}">
+        <th scope="row" class="cell-project">
+          <a href="{{ p.url | rel }}">{{ p.data.title }}</a>
+          <span class="cell-summary">{{ p.data.summary }}</span>
+        </th>
+        <td data-label="Status">{{ statusBadge(p.data.status) }}</td>
+        <td data-label="Topics"><ul class="tags">{% for t in p.data.tags %}<li>{{ t }}</li>{% endfor %}</ul></td>
+        <td data-label="Languages">{{ p.data.languages | join(", ") }}</td>
+        <td data-label="Started"><time datetime="{{ p.data.started }}">{{ p.data.started }}</time></td>
+        <td data-label="Updated"><time datetime="{{ p.data.updated }}">{{ p.data.updated }}</time></td>
+      </tr>
+      {%- endfor %}
+    </tbody>
+  </table>
+
+  <div class="empty" id="empty" hidden>
+    <p><strong>No projects match these filters.</strong> Clear the search or choose "Any" in a filter to see more.</p>
+    <button class="button button--small" type="button" id="empty-reset">Clear filters</button>
+  </div>
+
+  <p class="footnote">Status values follow the repository: Idea, Exploring, Active, Paused, Shelved, Done.</p>
+</div>

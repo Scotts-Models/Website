@@ -1,0 +1,12 @@
+---
+layout: layouts/base.njk
+title: Page not found
+permalink: /404.html
+eleventyExcludeFromCollections: true
+bodyClass: notfound
+---
+<div class="wrap page-head notfound">
+  <h1>This page doesn't exist</h1>
+  <p class="lead">The link may be out of date, or the page may have moved. Every project is listed on the projects page.</p>
+  <p><a class="button button--primary" href="{{ '/projects.html' | rel }}">Browse projects</a> <a class="button" href="{{ '/index.html' | rel }}">Go to the home page</a></p>
+</div>

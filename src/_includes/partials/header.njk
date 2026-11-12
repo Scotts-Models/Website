@@ -1,0 +1,21 @@
+{%- set nav = [
+  { label: "Home", url: "/index.html", key: "home" },
+  { label: "Projects", url: "/projects.html", key: "projects" },
+  { label: "About", url: "/about.html", key: "about" },
+  { label: "Contact", url: "/contact.html", key: "contact" }
+] %}
+<header class="site-header">
+  <div class="wrap site-header__inner">
+    <a class="brand" href="{{ '/index.html' | rel }}" aria-label="{{ site.name }} home">
+      {% include "partials/logo.njk" %}
+      <span class="brand__name">Scott's Models</span>
+    </a>
+    <nav class="site-nav" aria-label="Main">
+      <ul>
+        {%- for item in nav %}
+        <li><a href="{{ item.url | rel }}"{% if navKey == item.key %} aria-current="page"{% endif %}>{{ item.label }}</a></li>
+        {%- endfor %}
+      </ul>
+    </nav>
+  </div>
+</header>

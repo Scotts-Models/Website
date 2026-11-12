@@ -1,0 +1,84 @@
+---
+layout: layouts/base.njk
+navKey: projects
+bodyClass: project
+---
+{%- from "partials/macros.njk" import ext, statusBadge %}
+{%- set all = collections.projects %}
+{%- set idx = all | indexOfUrl(page.url) %}
+{%- set prev = all[idx - 1] if idx > 0 else null %}
+{%- set next = all[idx + 1] if idx < all.length - 1 else null %}
+<article class="wrap project">
+  <nav class="crumbs" aria-label="Breadcrumb">
+    <ol>
+      <li><a href="{{ '/projects.html' | rel }}">Projects</a></li>
+      <li aria-current="page">{{ title }}</li>
+    </ol>
+  </nav>
+
+  <header class="project__head">
+    <h1>{{ title }}</h1>
+    <p class="project__status">{{ statusBadge(status) }}{% if statusNote %}<span class="project__status-note">{{ statusNote }}</span>{% endif %}</p>
+    <p class="lead">{{ summary }}</p>
+  </header>
+
+  <div class="project__grid">
+    <aside class="project__meta" aria-label="Project details">
+      <dl>
+        <div><dt>Started</dt><dd><time datetime="{{ started }}">{{ started | dateLong }}</time></dd></div>
+        <div><dt>Last updated</dt><dd><time datetime="{{ updated }}">{{ updated | dateLong }}</time></dd></div>
+        <div><dt>Owners</dt><dd>{% if owners.length %}{{ owners | join(", ") }}{% else %}Not yet assigned{% endif %}</dd></div>
+        <div><dt>Languages</dt><dd>{{ languages | join(", ") }}</dd></div>
+        <div><dt>Topics</dt><dd><ul class="tags">{% for t in tags %}<li><a href="{{ '/projects.html' | rel }}?topic={{ t | urlencode }}">{{ t }}</a></li>{% endfor %}</ul></dd></div>
+        {%- if tools.length %}
+        <div><dt>Tools and methods</dt><dd>{{ tools | join(", ") }}</dd></div>
+        {%- endif %}
+        <div><dt>Source</dt><dd>
+          {%- if site.github.repoPublic %}{{ ext(site.github.repoUrl + "/tree/" + site.github.branch + "/" + folder, "View on GitHub") }}
+          {%- else %}<span class="muted">Private repository</span> <code>{{ folder }}/</code>{% endif %}
+        </dd></div>
+      </dl>
+    </aside>
+
+    <div class="project__body">
+      <section class="question" aria-labelledby="q-{{ slug }}">
+        <h2 id="q-{{ slug }}">The question</h2>
+        <p>{{ question }}</p>
+      </section>
+
+      {%- if highlights.length %}
+      <section aria-labelledby="h-{{ slug }}">
+        <h2 id="h-{{ slug }}">Key figures</h2>
+        <ul class="figures">
+          {%- for h in highlights %}
+          <li class="figure">
+            <span class="figure__value">{{ h.value }}</span>
+            <span class="figure__label">{{ h.label }}</span>
+            <span class="figure__source">Source: <code>{{ h.source }}</code></span>
+          </li>
+          {%- endfor %}
+        </ul>
+      </section>
+      {%- endif %}
+
+      <div class="prose">
+        {{ content | safe }}
+      </div>
+
+      {%- if links.length %}
+      <section class="project__links" aria-labelledby="l-{{ slug }}">
+        <h2 id="l-{{ slug }}">Related links</h2>
+        <ul>
+          {%- for l in links %}<li>{{ ext(l.url, l.label) }}</li>{% endfor %}
+        </ul>
+      </section>
+      {%- endif %}
+    </div>
+  </div>
+
+  <nav class="pager" aria-label="More projects">
+    {%- if prev %}<a class="pager__prev" href="{{ prev.url | rel }}"><span class="pager__hint">Previous project</span>{{ prev.data.title }}</a>{% else %}<span></span>{% endif %}
+    <a class="pager__all" href="{{ '/projects.html' | rel }}">All projects</a>
+    {%- if next %}<a class="pager__next" href="{{ next.url | rel }}"><span class="pager__hint">Next project</span>{{ next.data.title }}</a>{% else %}<span></span>{% endif %}
+  </nav>
+</article>

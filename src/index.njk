@@ -1,0 +1,118 @@
+---
+layout: layouts/base.njk
+title: Scott's Models
+navKey: home
+bodyClass: home
+permalink: /index.html
+jsonld:
+  "@context": "https://schema.org"
+  "@type": "Organization"
+  name: "Scott's Models"
+  description: "Technology studio for machine learning, simulation, and forecasting projects, founded by Mark Scott and Aaron Scott."
+  founder:
+    - { "@type": "Person", name: "Mark Scott", sameAs: ["https://github.com/MarkGScott960", "https://www.linkedin.com/in/mark-scott-bb6ab4329/", "https://markgscott960.github.io/Website/"] }
+    - { "@type": "Person", name: "Aaron Scott", sameAs: ["https://github.com/scottvaaron-ctrl"] }
+---
+{%- from "partials/macros.njk" import ext, statusBadge %}
+{%- set featured = collections.projects | featuredProjects %}
+
+<section class="hero">
+  <div class="wrap hero__grid">
+    <div class="hero__copy">
+      <h1 class="hero__title">Machine learning you can check.</h1>
+      <p class="hero__lead">Scott's Models is Mark and Aaron Scott's studio for machine learning, simulation, and forecasting. Each project starts with a precise question, has to beat a simple baseline on data it never saw, and records every decision along the way.</p>
+      <p class="hero__actions">
+        <a class="button button--primary" href="{{ '/projects.html' | rel }}">Browse projects</a>
+        <a class="button" href="{{ '/about.html' | rel }}">Meet the team</a>
+      </p>
+    </div>
+
+    <figure class="ledger" aria-labelledby="ledger-cap">
+      <figcaption id="ledger-cap" class="ledger__cap">From our decision log</figcaption>
+      <ol class="ledger__rows">
+        {%- for d in practice.logExcerpt %}
+        <li class="ledger__row">
+          <span class="ledger__id">{{ d.id }}</span>
+          <span class="ledger__title">{% if d.project %}<a href="{{ ('/projects/' + d.project + '.html') | rel }}">{{ d.title }}</a>{% else %}{{ d.title }}{% endif %}</span>
+          <time class="ledger__date" datetime="{{ d.date }}">{{ d.date }}</time>
+        </li>
+        {%- endfor %}
+      </ol>
+      <p class="ledger__foot">{{ practice.decisionRecords }} decision records across {{ practice.projects }} projects, counted {{ practice.asOf | dateLong }}.</p>
+    </figure>
+  </div>
+</section>
+
+<section class="section" aria-labelledby="featured-h">
+  <div class="wrap">
+    <div class="section__head">
+      <h2 id="featured-h">Featured projects</h2>
+      <a class="section__more" href="{{ '/projects.html' | rel }}">All {{ collections.projects.length }} projects</a>
+    </div>
+    <ul class="featured">
+      {%- for p in featured %}
+      <li class="featured__item">
+        <div class="featured__main">
+          <h3><a href="{{ p.url | rel }}">{{ p.data.title }}</a></h3>
+          <p>{{ p.data.summary }}</p>
+          <p class="featured__meta">{{ statusBadge(p.data.status) }} <span>{{ p.data.tags | join(", ") }}</span></p>
+        </div>
+        {%- if p.data.highlights.length %}
+        {%- set h = p.data.highlights[0] %}
+        <p class="featured__fact"><span class="featured__value">{{ h.value }}</span><span class="featured__label">{{ h.label }}</span></p>
+        {%- else %}
+        <p class="featured__fact featured__fact--question"><span class="featured__label">{{ p.data.question }}</span></p>
+        {%- endif %}
+      </li>
+      {%- endfor %}
+    </ul>
+  </div>
+</section>
+
+<section class="section section--tint" aria-labelledby="cap-h">
+  <div class="wrap">
+    <div class="section__head">
+      <h2 id="cap-h">What we build</h2>
+    </div>
+    <dl class="capabilities">
+      {%- for c in practice.capabilities %}
+      <div class="capability">
+        <dt>{{ c.title }}</dt>
+        <dd>
+          <p>{{ c.body }}</p>
+          <p class="capability__projects"><span class="visually-hidden">Related projects: </span>
+            {%- for slug in c.projects %}{% set pr = collections.projects | findSlug(slug) %}<a href="{{ pr.url | rel }}">{{ pr.data.title }}</a>{% if not loop.last %}, {% endif %}{% endfor %}
+          </p>
+        </dd>
+      </div>
+      {%- endfor %}
+    </dl>
+  </div>
+</section>
+
+<section class="section" aria-labelledby="how-h">
+  <div class="wrap how">
+    <div class="how__intro">
+      <h2 id="how-h">How we work</h2>
+      <p>Most model results that look impressive come from a flawed test. These rules apply to every project in our repository.</p>
+    </div>
+    <ul class="principles">
+      {%- for pr in practice.principles %}
+      <li><h3>{{ pr.title }}</h3><p>{{ pr.body }}</p></li>
+      {%- endfor %}
+    </ul>
+  </div>
+</section>
+
+<section class="section section--ink" aria-labelledby="team-h">
+  <div class="wrap team-strip">
+    <div>
+      <h2 id="team-h">Two brothers, two backgrounds</h2>
+      <p>Mark brings research and data analytics. Aaron brings a decade of running restaurant operations. Together we build models that hold up to a skeptical reviewer and make sense to the people who would use them.</p>
+    </div>
+    <p class="team-strip__actions">
+      <a class="button button--light" href="{{ '/about.html' | rel }}">About us</a>
+      <a class="button button--ghost-light" href="{{ '/contact.html' | rel }}">Contact us</a>
+    </p>
+  </div>
+</section>

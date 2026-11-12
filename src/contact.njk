@@ -1,0 +1,40 @@
+---
+layout: layouts/base.njk
+title: Contact
+description: "How to reach Mark Scott and Aaron Scott of Scott's Models."
+navKey: contact
+bodyClass: contact
+permalink: /contact.html
+---
+{%- from "partials/macros.njk" import ext %}
+<div class="wrap">
+  <header class="page-head">
+    <h1>Contact</h1>
+    <p class="lead">For questions about a project, collaboration, or anything else, reach either of us directly through the profiles below.</p>
+  </header>
+
+  <div class="contact-grid">
+    {%- for person in people %}
+    <section class="contact-card" aria-labelledby="c-{{ person.id }}">
+      <h2 id="c-{{ person.id }}">{{ person.name }}</h2>
+      <p class="contact-card__focus">{{ person.focus }}</p>
+      <ul class="contact-list">
+        {%- if person.email %}
+        <li><span class="contact-list__kind">Email</span><a href="mailto:{{ person.email }}">{{ person.email }}</a></li>
+        {%- endif %}
+        {%- for l in person.links %}
+        <li><span class="contact-list__kind">{{ l.label }}</span>{{ ext(l.url, l.handle or (l.url | replace("https://", "") | replace("www.", ""))) }}</li>
+        {%- endfor %}
+      </ul>
+    </section>
+    {%- endfor %}
+  </div>
+
+  <section class="section-block" aria-labelledby="where-h">
+    <h2 id="where-h">Best way to reach us</h2>
+    <div class="two-col">
+      <p>For anything about a specific project, include the project name so it reaches whichever of us owns it. You can find every project and its status on the <a href="{{ '/projects.html' | rel }}">projects page</a>.</p>
+      <p>Mark's personal website, including his research and CV, stays separate from this site and is linked above.</p>
+    </div>
+  </section>
+</div>

@@ -1,0 +1,35 @@
+<footer class="site-footer">
+  <div class="wrap site-footer__grid">
+    <div class="site-footer__brand">
+      <a class="brand" href="{{ '/index.html' | rel }}">
+        {% include "partials/logo.njk" %}
+        <span class="brand__name">Scott's Models</span>
+      </a>
+      <p>{{ site.tagline }}</p>
+    </div>
+    <nav aria-label="Footer">
+      <h2 class="site-footer__heading">Site</h2>
+      <ul>
+        <li><a href="{{ '/projects.html' | rel }}">Projects</a></li>
+        <li><a href="{{ '/about.html' | rel }}">About</a></li>
+        <li><a href="{{ '/contact.html' | rel }}">Contact</a></li>
+      </ul>
+    </nav>
+    {%- for person in people %}
+    <div>
+      <h2 class="site-footer__heading">{{ person.name }}</h2>
+      <ul>
+        {%- for link in person.links %}{% if link.kind != "web" or loop.first %}
+        <li><a href="{{ link.url }}" rel="noopener" target="_blank">{{ link.label }}<span class="visually-hidden"> (opens in a new tab)</span></a></li>
+        {%- endif %}{% endfor %}
+      </ul>
+    </div>
+    {%- endfor %}
+  </div>
+  <div class="wrap"><div class="site-footer__legal">
+    <p>{{ site.copyright }}</p>
+    {%- if site.github.orgVisible %}
+    <p><a href="{{ site.github.orgUrl }}" rel="noopener" target="_blank">{{ site.github.org }} on GitHub</a></p>
+    {%- endif %}
+  </div></div>
+</footer>

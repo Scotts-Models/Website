@@ -1,0 +1,8 @@
+{# External link: opens in a new tab and says so to screen readers. #}
+{% macro ext(url, label, cls="") -%}
+<a class="ext {{ cls }}" href="{{ url }}" target="_blank" rel="noopener">{{ label }}<svg class="ext__icon" viewBox="0 0 12 12" width="12" height="12" aria-hidden="true" focusable="false"><path d="M4.5 2.5h5v5M9.5 2.5 3 9" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg><span class="visually-hidden"> (opens in a new tab)</span></a>
+{%- endmacro %}
+
+{% macro statusBadge(s) -%}
+<span class="status {{ s | statusClass }}"><span class="status__dot" aria-hidden="true"></span>{{ s }}</span>
+{%- endmacro %}

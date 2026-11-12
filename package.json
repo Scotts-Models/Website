@@ -1,0 +1,19 @@
+{
+  "name": "scotts-models-website",
+  "version": "1.0.0",
+  "description": "Company website for Scott's Models, built with Eleventy for GitHub Pages",
+  "scripts": {
+    "build": "eleventy",
+    "start": "eleventy --serve",
+    "check": "node scripts/check-site.mjs"
+  },
+  "author": "Mark Scott and Aaron Scott",
+  "license": "UNLICENSED",
+  "devDependencies": {
+    "@11ty/eleventy": "^3.1.8",
+    "@fontsource-variable/instrument-sans": "^5.3.0",
+    "@fontsource/ibm-plex-mono": "^5.3.0"
+  },
+  "private": true,
+  "type": "module"
+}
